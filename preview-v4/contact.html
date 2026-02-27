@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact — God Sent Ministries</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .page-hero {
+            padding: clamp(8rem, 14vw, 12rem) 0 clamp(4rem, 8vw, 6rem);
+            background: var(--black);
+        }
+
+        .page-hero .eyebrow {
+            color: var(--accent-light);
+        }
+
+        .page-hero .heading-xl {
+            color: var(--white);
+            max-width: 700px;
+        }
+
+        .page-hero .body-lg {
+            color: var(--light-gray);
+        }
+
+        .contact-layout {
+            display: grid;
+            grid-template-columns: 1.4fr 1fr;
+            gap: 5rem;
+        }
+
+        .contact-main h2 {
+            font-family: var(--heading);
+            font-size: clamp(1.8rem, 3vw, 2.4rem);
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            margin-bottom: 1rem;
+        }
+
+        .contact-main>p {
+            font-size: 1.02rem;
+            color: var(--gray);
+            line-height: 1.8;
+            margin-bottom: 2.5rem;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .form-group label {
+            font-family: var(--heading);
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--charcoal);
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            font-family: var(--body);
+            font-size: 0.95rem;
+            padding: 0.85rem 1.1rem;
+            border: 1.5px solid var(--sand);
+            border-radius: var(--radius-sm);
+            background: var(--white);
+            color: var(--charcoal);
+            transition: border-color 0.3s, box-shadow 0.3s;
+            outline: none;
+            resize: vertical;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-subtle);
+        }
+
+        .form-group textarea {
+            min-height: 130px;
+        }
+
+        .form-group select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%236b6560' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            padding-right: 2.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .contact-sidebar {
+            padding-top: 0.5rem;
+        }
+
+        .info-card {
+            padding: 2.2rem;
+            background: var(--cream);
+            border-radius: var(--radius-lg);
+            margin-bottom: 1.2rem;
+            transition: box-shadow 0.3s;
+        }
+
+        .info-card:hover {
+            box-shadow: var(--shadow-md);
+        }
+
+        .info-card h3 {
+            font-family: var(--heading);
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .info-card p,
+        .info-card a {
+            font-size: 0.95rem;
+            color: var(--gray);
+            line-height: 1.7;
+        }
+
+        .info-card a {
+            transition: color 0.3s;
+        }
+
+        .info-card a:hover {
+            color: var(--accent);
+        }
+
+        .service-table {
+            width: 100%;
+        }
+
+        .service-table .row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+            font-size: 0.92rem;
+        }
+
+        .service-table .row:last-child {
+            border-bottom: none;
+        }
+
+        .service-table .day {
+            color: var(--charcoal);
+            font-weight: 500;
+        }
+
+        .service-table .time {
+            color: var(--accent);
+            font-weight: 600;
+            font-family: var(--heading);
+        }
+
+        @media (max-width: 900px) {
+            .contact-layout {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+        }
+
+        /* Map */
+        .map-section {
+            width: 100%;
+            height: 380px;
+            border-top: 1px solid var(--sand);
+        }
+
+        .map-section iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            filter: saturate(0.8) contrast(1.05);
+        }
+
+        /* FAQ */
+        .faq-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .faq-item {
+            padding: 2rem;
+            border: 1px solid var(--sand);
+            border-radius: var(--radius-lg);
+            transition: all 0.3s var(--ease);
+        }
+
+        .faq-item:hover {
+            border-color: var(--accent);
+            box-shadow: var(--shadow-md);
+        }
+
+        .faq-item h3 {
+            font-family: var(--heading);
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 0.6rem;
+        }
+
+        .faq-item p {
+            font-size: 0.92rem;
+            color: var(--gray);
+            line-height: 1.7;
+        }
+
+        @media (max-width: 768px) {
+            .faq-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="site-nav" id="nav">
+        <a href="index.html" class="nav-logo">God Sent<span class="dot">.</span></a>
+        <div class="nav-toggle"
+            onclick="this.classList.toggle('active');document.querySelector('.nav-menu').classList.toggle('open')">
+            <span></span><span></span><span></span></div>
+        <div class="nav-menu">
+            <a href="index.html">Home</a><a href="about.html">About</a><a href="ministries.html">Ministries</a><a
+                href="leadership.html">Leadership</a><a href="contact.html" class="active">Contact</a><a
+                href="contact.html" class="nav-btn">Visit Us</a>
+        </div>
+    </nav>
+
+    <section class="page-hero">
+        <div class="wrap">
+            <div class="eyebrow sr">Get In Touch</div>
+            <h1 class="heading-xl sr sr-d1">Come worship<br>with us.</h1>
+            <p class="body-lg sr sr-d2">Everyone is welcome. No matter where you are in your journey, there is a place
+                for you here.</p>
+        </div>
+    </section>
+
+    <section class="sec">
+        <div class="wrap">
+            <div class="contact-layout">
+                <div class="contact-main sr">
+                    <h2>Send us a message</h2>
+                    <p>Whether you have a prayer request, a question about our services, or just want to say hello —
+                        we&rsquo;d love to hear from you.</p>
+                    <form class="contact-form"
+                        onsubmit="event.preventDefault(); alert('Thank you for your message! We will get back to you soon.');">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="fname">First Name</label>
+                                <input type="text" id="fname" placeholder="Your first name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="lname">Last Name</label>
+                                <input type="text" id="lname" placeholder="Your last name">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" placeholder="your@email.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="reason">Reason for Contact</label>
+                            <select id="reason">
+                                <option value="">Select a reason...</option>
+                                <option>General Inquiry</option>
+                                <option>Prayer Request</option>
+                                <option>First-Time Visitor</option>
+                                <option>Volunteering</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="msg">Message</label>
+                            <textarea id="msg" placeholder="How can we help you?"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-fill btn-arrow" style="align-self:flex-start;">Send Message
+                        </button>
+                    </form>
+                </div>
+                <div class="contact-sidebar">
+                    <div class="info-card sr">
+                        <h3>Service Times</h3>
+                        <div class="service-table">
+                            <div class="row"><span class="day">Sunday Worship</span><span class="time">10:00 AM</span>
+                            </div>
+                            <div class="row"><span class="day">Wednesday Bible Study</span><span class="time">7:00
+                                    PM</span></div>
+                            <div class="row"><span class="day">Friday Prayer Night</span><span class="time">8:00
+                                    PM</span></div>
+                            <div class="row"><span class="day">Online (Zoom)</span><span class="time">Ongoing</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="info-card sr sr-d1">
+                        <h3>Location</h3>
+                        <p>Crystal Lake, Illinois-USA</p>
+                        <p>Online Campus via Zoom &amp; WhatsApp</p>
+                    </div>
+                    <div class="info-card sr sr-d2">
+                        <h3>Email</h3>
+                        <p><a href="mailto:contact@godsentministries.org">contact@godsentministries.org</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FIRST VISIT FAQ -->
+    <section class="sec sec-cream">
+        <div class="wrap">
+            <div style="text-align:center; margin-bottom:3.5rem;">
+                <div class="eyebrow sr" style="justify-content:center;">First Time?</div>
+                <h2 class="heading-lg sr sr-d1">Common Questions</h2>
+            </div>
+            <div class="faq-grid">
+                <div class="faq-item sr">
+                    <h3>What should I wear?</h3>
+                    <p>Come as you are. Our congregation wears everything from jeans to suits. There&rsquo;s no dress
+                        code — just come ready to worship.</p>
+                </div>
+                <div class="faq-item sr sr-d1">
+                    <h3>Is there parking?</h3>
+                    <p>Yes, we have free parking available at our Crystal Lake location. Volunteers will be happy to
+                        guide you when you arrive.</p>
+                </div>
+                <div class="faq-item sr sr-d2">
+                    <h3>Can I join online?</h3>
+                    <p>Absolutely! We have an active online campus through Zoom and WhatsApp. Reach out to us and
+                        we&rsquo;ll send you the details.</p>
+                </div>
+                <div class="faq-item sr sr-d3">
+                    <h3>How long are services?</h3>
+                    <p>Our Sunday worship service typically lasts about 90 minutes, including praise, worship, and the
+                        message. Bible studies are about an hour.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MAP -->
+    <div class="map-section">
+        <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d47274.03583106!2d-88.35!3d42.24!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x880f1d1d1d1d1d1d%3A0x1d1d1d1d1d1d1d1d!2sCrystal%20Lake%2C%20IL!5e0!3m2!1sen!2sus!4v1"
+            allowfullscreen="" loading="lazy" title="Crystal Lake, Illinois location"></iframe>
+    </div>
+
+    <footer class="site-footer">
+        <div class="wrap">
+            <div class="footer-top">
+                <div class="footer-brand-block">
+                    <div class="footer-brand">God Sent<span class="dot">.</span></div>
+                    <p class="footer-desc">A Christian ministry born from prayer, reaching communities across different
+                        spheres of the world.</p>
+                    <div class="footer-social"><a href="#">f</a><a href="#">▶</a><a href="#">w</a></div>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-col">
+                        <h4>Navigate</h4><a href="index.html">Home</a><a href="about.html">About</a><a
+                            href="ministries.html">Ministries</a><a href="leadership.html">Leadership</a>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Connect</h4><a href="contact.html">Visit Us</a><a
+                            href="mailto:contact@godsentministries.org">Email Us</a>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Location</h4><a href="#">Crystal Lake, IL</a><a href="#">Online via Zoom</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom"><span>&copy; 2025 God Sent Ministries. All rights reserved.</span><span>Crystal
+                    Lake, Illinois</span></div>
+        </div>
+    </footer>
+    <script>
+        const nav = document.getElementById('nav'); window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 60));
+        const obs = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) e.target.classList.add('vis'); }), { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+        document.querySelectorAll('.sr').forEach(el => obs.observe(el));
+    </script>
+</body>
+
+</html>

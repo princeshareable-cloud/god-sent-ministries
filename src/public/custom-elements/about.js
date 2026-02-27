@@ -1,143 +1,192 @@
 class AboutSection extends HTMLElement {
-    constructor() {
-        super();
-        this.attachShadow({ mode: 'open' });
-    }
+  constructor() {
+    super();
+    this.attachShadow({ mode: 'open' });
+  }
 
-    static get observedAttributes() {
-        return ['heading-text', 'body-text', 'image-url'];
-    }
+  static get observedAttributes() {
+    return ['heading-text', 'body-text', 'image-url'];
+  }
 
-    attributeChangedCallback(name, oldValue, newValue) {
-        if (oldValue !== newValue) {
-            this.render();
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (oldValue !== newValue) this.render();
+  }
+
+  connectedCallback() {
+    if (!this.hasAttribute('heading-text')) this.setAttribute('heading-text', 'About Us');
+    if (!this.hasAttribute('body-text')) this.setAttribute('body-text', 'God Sent is a Christian Ministries and church located in Crystal Lake, Illinois-USA. This church started in 2022 as a prayer altar online, on a WhatsApp platform and later on Zoom platform as the need for live streaming was needed by our communities living in different spheres of the world. God later opened doors for us to establish a physical church in Crystal Lake, Illinois. Our desire is to see people saved, healed, delivered and restored back to God.');
+    if (!this.hasAttribute('image-url')) this.setAttribute('image-url', '../community.jpeg');
+    this.render();
+    this._observeScroll();
+  }
+
+  _observeScroll() {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
         }
-    }
+      });
+    }, { threshold: 0.15 });
 
-    connectedCallback() {
-        if (!this.hasAttribute('heading-text')) {
-            this.setAttribute('heading-text', 'ABOUT US');
-        }
-        if (!this.hasAttribute('body-text')) {
-            this.setAttribute('body-text', 'God Sent is a Christian Ministries and church located in Crystal Lake, Illinois-USA. This church started in 2022 as a prayer alter online, on a WhatsApp platform and later on Zoom platform as the need for live streaming was needed...');
-        }
-        if (!this.hasAttribute('image-url')) {
-            this.setAttribute('image-url', 'https://images.unsplash.com/photo-1438232992991-995b7058bbb3?q=80&w=2073&auto=format&fit=crop');
-        }
-        this.render();
-    }
+    this.shadowRoot.querySelectorAll('.animate').forEach(el => observer.observe(el));
+  }
 
-    render() {
-        const headingText = this.getAttribute('heading-text');
-        const bodyText = this.getAttribute('body-text');
-        const imageUrl = this.getAttribute('image-url');
+  render() {
+    const heading = this.getAttribute('heading-text');
+    const body = this.getAttribute('body-text');
+    const img = this.getAttribute('image-url');
 
-        this.shadowRoot.innerHTML = `
+    this.shadowRoot.innerHTML = `
       <style>
-        :host {
-          display: block;
-          width: 100%;
-          font-family: 'Helvetica Neue', Arial, sans-serif;
-          background-color: #050505; /* Deep rich black */
-          color: #e0e0e0;
-          padding: 6rem 0;
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Raleway:wght@300;400;500;600&display=swap');
+
+        :host { display: block; width: 100%; }
+
+        .section {
+          padding: 8rem 2rem;
+          background: linear-gradient(180deg, #0a0015 0%, #110022 50%, #0a0015 100%);
+          position: relative;
+          overflow: hidden;
+        }
+
+        .section::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 1px;
+          height: 80px;
+          background: linear-gradient(180deg, #d4af37, transparent);
         }
 
         .container {
           max-width: 1200px;
           margin: 0 auto;
-          padding: 0 2rem;
           display: grid;
           grid-template-columns: 1fr 1fr;
-          gap: 4rem;
+          gap: 5rem;
           align-items: center;
         }
 
-        .text-content {
-          order: 2; /* Image on left, text on right by default */
-        }
-
-        h2 {
-          font-size: clamp(2rem, 5vw, 3.5rem);
-          font-weight: 300;
-          letter-spacing: 0.1em;
-          text-transform: uppercase;
-          margin: 0 0 2rem 0;
+        .img-col {
           position: relative;
-          color: #ffffff;
         }
 
-        h2::after {
-          content: '';
-          position: absolute;
-          bottom: -10px;
-          left: 0;
-          width: 60px;
-          height: 2px;
-          background-color: #ffffff;
-        }
-
-        p {
-          font-size: 1.1rem;
-          line-height: 1.8;
-          color: #909090;
-          margin-bottom: 1.5rem;
-        }
-
-        .image-container {
-          order: 1;
+        .img-frame {
           position: relative;
-          border-radius: 4px;
+          border-radius: 12px;
           overflow: hidden;
-          box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-          aspect-ratio: 4/5;
+          box-shadow: 0 30px 70px rgba(100, 50, 180, 0.3), 0 0 0 1px rgba(212, 175, 55, 0.2);
         }
 
-        .image-container::after {
+        .img-frame::after {
           content: '';
           position: absolute;
           inset: 0;
-          background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 100%);
+          border-radius: 12px;
+          background: linear-gradient(135deg, rgba(138, 43, 226, 0.2) 0%, transparent 60%);
           pointer-events: none;
         }
 
         img {
+          display: block;
           width: 100%;
-          height: 100%;
+          aspect-ratio: 4/5;
           object-fit: cover;
-          transition: transform 0.7s ease;
+          transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .image-container:hover img {
-          transform: scale(1.03);
+        .img-frame:hover img { transform: scale(1.05); }
+
+        /* Decorative floating accent */
+        .accent-box {
+          position: absolute;
+          bottom: -20px;
+          right: -20px;
+          width: 120px;
+          height: 120px;
+          border: 2px solid rgba(212, 175, 55, 0.3);
+          border-radius: 8px;
+          z-index: -1;
         }
+
+        .text-col { padding: 1rem 0; }
+
+        .label {
+          font-family: 'Raleway', sans-serif;
+          font-size: 0.8rem;
+          font-weight: 600;
+          letter-spacing: 0.3em;
+          text-transform: uppercase;
+          color: #d4af37;
+          margin-bottom: 1rem;
+          display: block;
+        }
+
+        h2 {
+          font-family: 'Playfair Display', Georgia, serif;
+          font-size: clamp(2.5rem, 4vw, 4rem);
+          font-weight: 700;
+          color: #ffffff;
+          margin: 0 0 2rem;
+          line-height: 1.15;
+        }
+
+        .gold-line {
+          width: 60px;
+          height: 3px;
+          background: linear-gradient(90deg, #d4af37, #8b5cf6);
+          margin-bottom: 2rem;
+          border-radius: 3px;
+        }
+
+        p {
+          font-family: 'Raleway', sans-serif;
+          font-size: 1.1rem;
+          line-height: 1.9;
+          color: rgba(255, 255, 255, 0.7);
+          margin: 0;
+        }
+
+        .animate {
+          opacity: 0;
+          transform: translateY(40px);
+          transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .animate.visible {
+          opacity: 1;
+          transform: translateY(0);
+        }
+
+        .animate:nth-child(2) { transition-delay: 0.15s; }
 
         @media (max-width: 900px) {
-          .container {
-            grid-template-columns: 1fr;
-            gap: 3rem;
-          }
-          .text-content {
-            order: 1;
-          }
-          .image-container {
-            order: 2;
-            aspect-ratio: 16/9;
-          }
+          .container { grid-template-columns: 1fr; gap: 3rem; }
+          .section { padding: 5rem 1.5rem; }
+          .accent-box { display: none; }
         }
       </style>
-      
-      <div class="container">
-        <div class="image-container">
-          <img src="${imageUrl}" alt="About God Sent Ministries">
-        </div>
-        <div class="text-content">
-          <h2>${headingText}</h2>
-          <p>${bodyText}</p>
+
+      <div class="section">
+        <div class="container">
+          <div class="img-col animate">
+            <div class="img-frame">
+              <img src="${img}" alt="God Sent Ministries Community">
+            </div>
+            <div class="accent-box"></div>
+          </div>
+          <div class="text-col animate">
+            <span class="label">Who We Are</span>
+            <h2>${heading}</h2>
+            <div class="gold-line"></div>
+            <p>${body}</p>
+          </div>
         </div>
       </div>
     `;
-    }
+  }
 }
-
 customElements.define('about-section', AboutSection);

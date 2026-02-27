@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>God Sent Ministries - Premium Preview</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Raleway:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #020005;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+    </style>
+
+    <!-- Import all custom components -->
+    <script src="./src/public/custom-elements/hero.js"></script>
+    <script src="./src/public/custom-elements/vision.js"></script>
+    <script src="./src/public/custom-elements/about.js"></script>
+    <script src="./src/public/custom-elements/ministries.js"></script>
+    <script src="./src/public/custom-elements/pastors.js"></script>
+    <script src="./src/public/custom-elements/footer.js"></script>
+</head>
+
+<body>
+
+    <!-- 1. HERO — Full-screen cinematic with gold particles -->
+    <hero-section background-image="./src/public/hero-bg.jpeg">
+    </hero-section>
+
+    <!-- 2. VISION & MISSION — Gold glow split -->
+    <vision-section></vision-section>
+
+    <!-- 3. ABOUT US — Real community photo with scroll reveal -->
+    <about-section image-url="./src/public/community.jpeg">
+    </about-section>
+
+    <!-- 4. MINISTRIES — Hover-glow cards -->
+    <ministries-section></ministries-section>
+
+    <!-- 5. PASTORS — Real photos with purple glass cards -->
+    <pastors-section pastor1-img="./src/public/pastor-david.jpeg" pastor2-img="./src/public/pastors-couple.jpeg">
+    </pastors-section>
+
+    <!-- 6. FOOTER -->
+    <footer-section></footer-section>
+
+</body>
+
+</html>

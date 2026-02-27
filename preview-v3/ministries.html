@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ministries — God Sent Ministries</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .page-hero {
+            padding: clamp(8rem, 14vw, 12rem) 0 clamp(4rem, 8vw, 6rem);
+            background: var(--black);
+        }
+
+        .page-hero .eyebrow {
+            color: var(--accent-light);
+        }
+
+        .page-hero .heading-xl {
+            color: var(--white);
+            max-width: 700px;
+        }
+
+        .page-hero .body-lg {
+            color: var(--light-gray);
+        }
+
+        .ministry-full {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            padding: 5rem 0;
+            border-bottom: 1px solid var(--sand);
+        }
+
+        .ministry-full:last-child {
+            border-bottom: none;
+        }
+
+        .ministry-full:nth-child(even) {
+            direction: rtl;
+        }
+
+        .ministry-full:nth-child(even)>* {
+            direction: ltr;
+        }
+
+        .ministry-full img {
+            width: 100%;
+            aspect-ratio: 4/3;
+            object-fit: cover;
+            border-radius: 12px;
+            filter: saturate(0.9) contrast(1.03);
+        }
+
+        .ministry-num {
+            font-family: var(--heading);
+            font-size: 5rem;
+            font-weight: 700;
+            color: var(--sand);
+            line-height: 1;
+            margin-bottom: 1rem;
+            letter-spacing: -0.04em;
+        }
+
+        .ministry-full h3 {
+            font-family: var(--heading);
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            letter-spacing: -0.01em;
+        }
+
+        .ministry-full p {
+            font-size: 1.05rem;
+            line-height: 1.85;
+            color: var(--gray);
+            max-width: 480px;
+        }
+
+        @media (max-width: 900px) {
+            .ministry-full {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                padding: 3rem 0;
+            }
+
+            .ministry-full:nth-child(even) {
+                direction: ltr;
+            }
+
+            .ministry-num {
+                font-size: 3rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="site-nav" id="nav">
+        <a href="index.html" class="nav-logo">God Sent<span class="dot">.</span></a>
+        <div class="nav-toggle" onclick="document.querySelector('.nav-menu').classList.toggle('open')">
+            <span></span><span></span><span></span></div>
+        <div class="nav-menu">
+            <a href="index.html">Home</a><a href="about.html">About</a><a href="ministries.html"
+                class="active">Ministries</a><a href="leadership.html">Leadership</a><a
+                href="contact.html">Contact</a><a href="contact.html" class="nav-btn">Visit Us</a>
+        </div>
+    </nav>
+
+    <section class="page-hero">
+        <div class="wrap">
+            <div class="eyebrow sr">What We Do</div>
+            <h1 class="heading-xl sr sr-d1">Our Ministries</h1>
+            <p class="body-lg sr sr-d2">Faith in action — serving communities through compassion, discipleship, and the
+                transformative power of the Gospel.</p>
+        </div>
+    </section>
+
+    <section class="sec">
+        <div class="wrap">
+            <div class="ministry-full sr">
+                <img src="img/worship.jpeg" alt="Church Ministry">
+                <div>
+                    <div class="ministry-num">01</div>
+                    <h3>Church Ministry</h3>
+                    <p>Helping members learn more about God, worship meaningfully, and grow closer to Him through
+                        spiritual growth and discipleship. We create a welcoming space for everyone to encounter God's
+                        presence through prayer, teaching, and fellowship.</p>
+                </div>
+            </div>
+            <div class="ministry-full sr">
+                <img src="img/community.jpeg" alt="Evangelism">
+                <div>
+                    <div class="ministry-num">02</div>
+                    <h3>Evangelism Outreach</h3>
+                    <p>Sharing the message and teachings of Jesus Christ with intention and purpose, bringing people to
+                        experience His love and grace. We go into communities, neighborhoods, and digital spaces to
+                        reach those who have not yet heard the Good News.</p>
+                </div>
+            </div>
+            <div class="ministry-full sr">
+                <img src="img/hero-bg.jpeg" alt="Hospital Ministry">
+                <div>
+                    <div class="ministry-num">03</div>
+                    <h3>Hospital Ministry</h3>
+                    <p>Providing spiritual support, prayer, and companionship to those who are hospitalized, in nursing
+                        homes, or homebound. We believe no one should face suffering alone, and we bring the comfort of
+                        Christ to those in their most vulnerable moments.</p>
+                </div>
+            </div>
+            <div class="ministry-full sr">
+                <img src="img/congregation.jpeg" alt="Prisons & Orphanages">
+                <div>
+                    <div class="ministry-num">04</div>
+                    <h3>Prisons &amp; Orphanages</h3>
+                    <p>Serving incarcerated individuals and their families while extending love and care to children in
+                        need of hope and belonging. We believe in the power of redemption and that every life has value
+                        in the eyes of God.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="site-footer">
+        <div class="wrap">
+            <div class="footer-grid">
+                <div>
+                    <div class="footer-brand">God Sent<span class="dot">.</span></div>
+                    <p class="footer-desc">A Christian ministry born from prayer, reaching communities across different
+                        spheres of the world.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Navigate</h4><a href="index.html">Home</a><a href="about.html">About</a><a
+                        href="ministries.html">Ministries</a><a href="leadership.html">Leadership</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Connect</h4><a href="contact.html">Visit Us</a><a
+                        href="mailto:contact@godsentministries.org">Email Us</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Location</h4><a href="#">Crystal Lake, IL</a><a href="#">Online via Zoom</a>
+                </div>
+            </div>
+            <div class="footer-bottom"><span>&copy; 2025 God Sent Ministries</span><span>Crystal Lake, Illinois</span>
+            </div>
+        </div>
+    </footer>
+    <script>
+        const nav = document.getElementById('nav'); window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 60));
+        const obs = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) e.target.classList.add('vis'); }), { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
+        document.querySelectorAll('.sr').forEach(el => obs.observe(el));
+    </script>
+</body>
+
+</html>

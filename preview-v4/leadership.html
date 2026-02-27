@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leadership — God Sent Ministries</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .page-hero {
+            padding: clamp(8rem, 14vw, 12rem) 0 clamp(4rem, 8vw, 6rem);
+            background: var(--black);
+        }
+
+        .page-hero .eyebrow {
+            color: var(--accent-light);
+        }
+
+        .page-hero .heading-xl {
+            color: var(--white);
+            max-width: 700px;
+        }
+
+        .page-hero .body-lg {
+            color: var(--light-gray);
+        }
+
+        .leader-feature {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 5rem;
+            align-items: start;
+            padding: 4rem 0;
+            border-bottom: 1px solid var(--sand);
+        }
+
+        .leader-feature:last-of-type {
+            border-bottom: none;
+        }
+
+        .leader-feature:nth-child(even) {
+            direction: rtl;
+        }
+
+        .leader-feature:nth-child(even)>* {
+            direction: ltr;
+        }
+
+        .leader-photo-wrap {
+            position: relative;
+            overflow: hidden;
+            border-radius: var(--radius-lg);
+        }
+
+        .leader-photo {
+            width: 100%;
+            aspect-ratio: 3/4;
+            object-fit: cover;
+            object-position: top center;
+            filter: saturate(0.9) contrast(1.05);
+            transition: transform 0.8s var(--ease);
+        }
+
+        .leader-feature:hover .leader-photo {
+            transform: scale(1.03);
+        }
+
+        .leader-info {
+            padding-top: 1.5rem;
+        }
+
+        .leader-role {
+            font-family: var(--heading);
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .leader-role::before {
+            content: '';
+            width: 20px;
+            height: 2px;
+            background: var(--accent);
+        }
+
+        .leader-name {
+            font-family: var(--heading);
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+        }
+
+        .leader-bio {
+            font-size: 1.02rem;
+            line-height: 1.9;
+            color: var(--gray);
+            margin-bottom: 1.5rem;
+        }
+
+        .leader-quote {
+            font-family: var(--heading);
+            font-size: 1.1rem;
+            font-weight: 400;
+            font-style: italic;
+            color: var(--charcoal);
+            padding: 1.5rem;
+            padding-left: 2rem;
+            border-left: 3px solid var(--accent);
+            background: var(--accent-subtle);
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            line-height: 1.6;
+            margin-top: 1.5rem;
+        }
+
+        /* Credentials */
+        .credentials {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .cred-item {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 0.85rem;
+            color: var(--gray);
+        }
+
+        .cred-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--cream);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .cred-icon svg {
+            width: 16px;
+            height: 16px;
+            stroke: var(--accent);
+            stroke-width: 1.5;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        @media (max-width: 900px) {
+            .leader-feature {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .leader-feature:nth-child(even) {
+                direction: ltr;
+            }
+
+            .leader-info {
+                padding-top: 0;
+            }
+        }
+
+        /* Together band */
+        .together-band {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            min-height: 500px;
+        }
+
+        .together-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: saturate(0.9) contrast(1.05);
+        }
+
+        .together-text {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: clamp(3rem, 6vw, 5rem);
+            background: var(--black);
+        }
+
+        .together-text h2 {
+            font-family: var(--heading);
+            font-size: clamp(2rem, 3.5vw, 2.8rem);
+            font-weight: 600;
+            color: var(--white);
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .together-text p {
+            font-size: 1.05rem;
+            color: var(--light-gray);
+            line-height: 1.85;
+        }
+
+        @media (max-width: 768px) {
+            .together-band {
+                grid-template-columns: 1fr;
+            }
+
+            .together-img {
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="site-nav" id="nav">
+        <a href="index.html" class="nav-logo">God Sent<span class="dot">.</span></a>
+        <div class="nav-toggle"
+            onclick="this.classList.toggle('active');document.querySelector('.nav-menu').classList.toggle('open')">
+            <span></span><span></span><span></span>
+        </div>
+        <div class="nav-menu">
+            <a href="index.html">Home</a><a href="about.html">About</a><a href="ministries.html">Ministries</a><a
+                href="leadership.html" class="active">Leadership</a><a href="contact.html">Contact</a><a
+                href="contact.html" class="nav-btn">Visit Us</a>
+        </div>
+    </nav>
+
+    <section class="page-hero">
+        <div class="wrap">
+            <div class="eyebrow sr">Shepherds of the Flock</div>
+            <h1 class="heading-xl sr sr-d1">Our Leadership</h1>
+            <p class="body-lg sr sr-d2">Called to serve, equipped to lead, and passionate about building up the body of
+                Christ.</p>
+        </div>
+    </section>
+
+    <section class="sec">
+        <div class="wrap">
+            <div class="leader-feature sr">
+                <div class="leader-photo-wrap">
+                    <img src="img/pastor-david.jpeg" alt="Apostle David Mugerwa" class="leader-photo">
+                </div>
+                <div class="leader-info">
+                    <div class="leader-role">Senior Pastor &amp; Founder</div>
+                    <h2 class="leader-name">Apostle David Mugerwa</h2>
+                    <p class="leader-bio">Apostle David is passionate about church planting, evangelism, and
+                        transforming lives through the power of the Gospel. His vision for God Sent Ministries was born
+                        from a deep calling to reach those who have never experienced the presence and power of God.</p>
+                    <p class="leader-bio">Starting with a simple WhatsApp prayer altar, he has led the ministry into a
+                        thriving global community that worships both in Crystal Lake and online.</p>
+                    <div class="credentials">
+                        <div class="cred-item">
+                            <div class="cred-icon"><svg viewBox="0 0 24 24">
+                                    <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+                                    <path d="M6 12v5c3 3 9 3 12 0v-5" />
+                                </svg></div> B.A. Christian Ministry
+                        </div>
+                        <div class="cred-item">
+                            <div class="cred-icon"><svg viewBox="0 0 24 24">
+                                    <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+                                    <path d="M6 12v5c3 3 9 3 12 0v-5" />
+                                </svg></div> M.A. Evangelism &amp; Leadership, Wheaton College
+                        </div>
+                    </div>
+                    <blockquote class="leader-quote">&ldquo;Our mandate is clear: rescue, recover, and restore.&rdquo;
+                    </blockquote>
+                </div>
+            </div>
+
+            <div class="leader-feature sr">
+                <div class="leader-photo-wrap">
+                    <img src="img/pastor-debbie.jpeg" alt="Pastor Debbie Mugerwa" class="leader-photo">
+                </div>
+                <div class="leader-info">
+                    <div class="leader-role">Co-Pastor</div>
+                    <h2 class="leader-name">Pastor Debbie Mugerwa</h2>
+                    <p class="leader-bio">Pastor Debbie&rsquo;s passion is rooted in teaching the Word of God, leading
+                        children&rsquo;s ministries, and counseling women through the most challenging seasons of life.
+                    </p>
+                    <p class="leader-bio">She brings warmth, wisdom, and a deep commitment to nurturing the next
+                        generation of believers at God Sent Ministries.</p>
+                    <div class="credentials">
+                        <div class="cred-item">
+                            <div class="cred-icon"><svg viewBox="0 0 24 24">
+                                    <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+                                    <path d="M6 12v5c3 3 9 3 12 0v-5" />
+                                </svg></div> Diploma in Early Childhood Development, Concordia University
+                        </div>
+                    </div>
+                    <blockquote class="leader-quote">&ldquo;God&rsquo;s love is the answer to every question the heart
+                        asks.&rdquo;</blockquote>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TOGETHER -->
+    <div class="together-band">
+        <img src="img/pastors-couple.jpeg" alt="Apostle David and Pastor Debbie" class="together-img">
+        <div class="together-text">
+            <div class="eyebrow sr" style="color:var(--accent-light);">Leading Together</div>
+            <h2 class="sr sr-d1">United in calling,<br>purpose, and love.</h2>
+            <p class="sr sr-d2">Together, Apostle David and Pastor Debbie lead God Sent Ministries with a shared
+                commitment to seeing people transformed by the Gospel. Their partnership reflects the heart of the
+                ministry — a family built on faith, love, and unwavering purpose.</p>
+        </div>
+    </div>
+
+    <footer class="site-footer">
+        <div class="wrap">
+            <div class="footer-top">
+                <div class="footer-brand-block">
+                    <div class="footer-brand">God Sent<span class="dot">.</span></div>
+                    <p class="footer-desc">A Christian ministry born from prayer, reaching communities across different
+                        spheres of the world.</p>
+                    <div class="footer-social"><a href="#">f</a><a href="#">▶</a><a href="#">w</a></div>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-col">
+                        <h4>Navigate</h4><a href="index.html">Home</a><a href="about.html">About</a><a
+                            href="ministries.html">Ministries</a><a href="leadership.html">Leadership</a>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Connect</h4><a href="contact.html">Visit Us</a><a
+                            href="mailto:contact@godsentministries.org">Email Us</a>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Location</h4><a href="#">Crystal Lake, IL</a><a href="#">Online via Zoom</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom"><span>&copy; 2025 God Sent Ministries. All rights reserved.</span><span>Crystal
+                    Lake, Illinois</span></div>
+        </div>
+    </footer>
+    <script>
+        const nav = document.getElementById('nav'); window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 60));
+        const obs = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) e.target.classList.add('vis'); }), { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+        document.querySelectorAll('.sr').forEach(el => obs.observe(el));
+    </script>
+</body>
+
+</html>

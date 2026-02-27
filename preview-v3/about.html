@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About — God Sent Ministries</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* ─── About Page Hero ─── */
+        .page-hero {
+            padding: clamp(8rem, 14vw, 12rem) 0 clamp(4rem, 8vw, 6rem);
+            background: var(--black);
+        }
+
+        .page-hero .eyebrow {
+            color: var(--accent-light);
+        }
+
+        .page-hero .heading-xl {
+            color: var(--white);
+            max-width: 700px;
+        }
+
+        .page-hero .body-lg {
+            color: var(--light-gray);
+        }
+
+        /* ─── Timeline ─── */
+        .timeline {
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 100%;
+            background: var(--sand);
+        }
+
+        .tl-item {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            margin-bottom: 4rem;
+            position: relative;
+        }
+
+        .tl-item::before {
+            content: '';
+            position: absolute;
+            top: 0.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--accent);
+            border: 3px solid var(--white);
+            box-shadow: 0 0 0 3px var(--accent);
+            z-index: 2;
+        }
+
+        .tl-year {
+            font-family: var(--heading);
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--sand);
+            text-align: right;
+            padding-right: 3rem;
+            line-height: 1;
+        }
+
+        .tl-content {
+            padding-left: 3rem;
+        }
+
+        .tl-content h3 {
+            font-family: var(--heading);
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+        }
+
+        .tl-content p {
+            font-size: 0.95rem;
+            line-height: 1.8;
+            color: var(--gray);
+        }
+
+        @media (max-width: 768px) {
+            .timeline::before {
+                left: 1rem;
+            }
+
+            .tl-item {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+                padding-left: 3rem;
+            }
+
+            .tl-item::before {
+                left: 1rem;
+            }
+
+            .tl-year {
+                text-align: left;
+                padding: 0;
+                font-size: 2rem;
+                color: var(--accent);
+            }
+
+            .tl-content {
+                padding-left: 0;
+            }
+        }
+
+        /* ─── Story Section ─── */
+        .story-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.3fr;
+            gap: 5rem;
+            align-items: center;
+        }
+
+        .story-img-stack {
+            position: relative;
+            height: 550px;
+        }
+
+        .story-img-stack img:first-child {
+            width: 70%;
+            aspect-ratio: 3/4;
+            object-fit: cover;
+            border-radius: 12px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+
+        .story-img-stack img:last-child {
+            width: 60%;
+            aspect-ratio: 4/3;
+            object-fit: cover;
+            border-radius: 12px;
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            z-index: 2;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
+        }
+
+        @media (max-width: 900px) {
+            .story-grid {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .story-img-stack {
+                height: auto;
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 1rem;
+            }
+
+            .story-img-stack img:first-child,
+            .story-img-stack img:last-child {
+                position: static;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAV -->
+    <nav class="site-nav" id="nav">
+        <a href="index.html" class="nav-logo">God Sent<span class="dot">.</span></a>
+        <div class="nav-toggle" onclick="document.querySelector('.nav-menu').classList.toggle('open')">
+            <span></span><span></span><span></span>
+        </div>
+        <div class="nav-menu">
+            <a href="index.html">Home</a>
+            <a href="about.html" class="active">About</a>
+            <a href="ministries.html">Ministries</a>
+            <a href="leadership.html">Leadership</a>
+            <a href="contact.html">Contact</a>
+            <a href="contact.html" class="nav-btn">Visit Us</a>
+        </div>
+    </nav>
+
+    <!-- PAGE HERO -->
+    <section class="page-hero">
+        <div class="wrap">
+            <div class="eyebrow sr">Our Story</div>
+            <h1 class="heading-xl sr sr-d1">A church born<br>from prayer.</h1>
+            <p class="body-lg sr sr-d2">What started as a simple altar on WhatsApp grew into a global community reaching
+                people across continents.</p>
+        </div>
+    </section>
+
+    <!-- STORY -->
+    <section class="sec">
+        <div class="wrap">
+            <div class="story-grid">
+                <div class="story-img-stack sr">
+                    <img src="img/worship.jpeg" alt="Worship service" class="photo">
+                    <img src="img/community.jpeg" alt="Community gathering" class="photo">
+                </div>
+                <div>
+                    <div class="eyebrow sr">Who We Are</div>
+                    <h2 class="heading-lg sr sr-d1">God Sent is a Christian Ministries and church in Crystal Lake,
+                        Illinois.</h2>
+                    <p class="body-lg sr sr-d2" style="margin-bottom:1.5rem;">This church started in 2022 as a prayer
+                        altar online, on a WhatsApp platform and later on Zoom as the need for live streaming grew from
+                        our communities living in different spheres of the world.</p>
+                    <p class="body-lg sr sr-d3">God later opened doors for us to establish a physical church in Crystal
+                        Lake, Illinois. Our desire is to see people saved, healed, delivered and restored back to God.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TIMELINE -->
+    <section class="sec sec-cream">
+        <div class="wrap-narrow">
+            <div style="text-align:center; margin-bottom:4rem;">
+                <div class="eyebrow sr" style="justify-content:center;">Our Journey</div>
+                <h2 class="heading-lg sr sr-d1">How we got here</h2>
+            </div>
+            <div class="timeline">
+                <div class="tl-item sr">
+                    <div class="tl-year">2022</div>
+                    <div class="tl-content">
+                        <h3>The Prayer Altar</h3>
+                        <p>God Sent began as an online prayer altar on WhatsApp, bringing believers together across
+                            borders for daily devotion and intercession.</p>
+                    </div>
+                </div>
+                <div class="tl-item sr">
+                    <div class="tl-year">2023</div>
+                    <div class="tl-content">
+                        <h3>Going Live on Zoom</h3>
+                        <p>As the community grew, we moved to Zoom to enable live worship, preaching, and teaching for
+                            members across the globe.</p>
+                    </div>
+                </div>
+                <div class="tl-item sr">
+                    <div class="tl-year">2024</div>
+                    <div class="tl-content">
+                        <h3>Physical Church Established</h3>
+                        <p>God opened doors for a physical location in Crystal Lake, Illinois, where the congregation
+                            now gathers every Sunday.</p>
+                    </div>
+                </div>
+                <div class="tl-item sr">
+                    <div class="tl-year">Now</div>
+                    <div class="tl-content">
+                        <h3>Growing &amp; Reaching</h3>
+                        <p>With four active ministries and a global online campus, God Sent continues to rescue,
+                            recover, and restore lives.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+        <div class="wrap">
+            <div class="footer-grid">
+                <div>
+                    <div class="footer-brand">God Sent<span class="dot">.</span></div>
+                    <p class="footer-desc">A Christian ministry born from prayer, reaching communities across different
+                        spheres of the world.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Navigate</h4><a href="index.html">Home</a><a href="about.html">About</a><a
+                        href="ministries.html">Ministries</a><a href="leadership.html">Leadership</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Connect</h4><a href="contact.html">Visit Us</a><a
+                        href="mailto:contact@godsentministries.org">Email Us</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Location</h4><a href="#">Crystal Lake, IL</a><a href="#">Online via Zoom</a>
+                </div>
+            </div>
+            <div class="footer-bottom"><span>&copy; 2025 God Sent Ministries</span><span>Crystal Lake, Illinois</span>
+            </div>
+        </div>
+    </footer>
+    <script>
+        const nav = document.getElementById('nav');
+        window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 60));
+        const obs = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) e.target.classList.add('vis'); }), { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
+        document.querySelectorAll('.sr').forEach(el => obs.observe(el));
+    </script>
+</body>
+
+</html>

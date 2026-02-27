@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>God Sent Ministries - Client Previews</title>
+  <style>
+    :root {
+      --bg: #f4efe8;
+      --ink: #1f1a16;
+      --accent: #8f5a24;
+      --accent-soft: #c08a52;
+      --card: #fffaf4;
+      --border: #ddc6ad;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 15% 15%, #fdf7ef 0%, transparent 40%),
+        radial-gradient(circle at 85% 0%, #f6eadc 0%, transparent 35%),
+        var(--bg);
+      min-height: 100vh;
+      padding: 48px 20px;
+    }
+
+    main {
+      max-width: 920px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      margin-bottom: 12px;
+      letter-spacing: 0.3px;
+    }
+
+    .subhead {
+      color: #4e463f;
+      margin-bottom: 30px;
+      line-height: 1.6;
+      max-width: 700px;
+    }
+
+    .grid {
+      display: grid;
+      gap: 16px;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 18px;
+      box-shadow: 0 8px 20px rgba(31, 26, 22, 0.06);
+    }
+
+    .card h2 {
+      font-size: 1.05rem;
+      margin-bottom: 8px;
+      font-weight: 700;
+    }
+
+    .card p {
+      color: #5d534a;
+      font-size: 0.95rem;
+      line-height: 1.45;
+      margin-bottom: 14px;
+      min-height: 56px;
+    }
+
+    .card a {
+      display: inline-block;
+      text-decoration: none;
+      color: #fff;
+      background: linear-gradient(120deg, var(--accent), var(--accent-soft));
+      border-radius: 9px;
+      padding: 10px 14px;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .card a:hover {
+      filter: brightness(1.06);
+    }
+
+    .note {
+      margin-top: 24px;
+      color: #5d534a;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <h1>God Sent Ministries - Preview Links</h1>
+    <p class="subhead">
+      Use these links to review each concept version independently. Share this page URL with your client.
+    </p>
+
+    <section class="grid">
+      <article class="card">
+        <h2>Preview 1</h2>
+        <p>Web components version (single-page concept using `src/public` assets).</p>
+        <a href="./preview.html">Open Preview 1</a>
+      </article>
+
+      <article class="card">
+        <h2>Preview 2</h2>
+        <p>Single-page cinematic editorial version.</p>
+        <a href="./preview-v2.html">Open Preview 2</a>
+      </article>
+
+      <article class="card">
+        <h2>Preview 3</h2>
+        <p>Multi-page site version with dedicated About/Ministries/Leadership/Contact pages.</p>
+        <a href="./preview-v3/index.html">Open Preview 3</a>
+      </article>
+
+      <article class="card">
+        <h2>Preview 4</h2>
+        <p>Multi-page upgraded visual design version.</p>
+        <a href="./preview-v4/index.html">Open Preview 4</a>
+      </article>
+    </section>
+
+    <p class="note">
+      Tip: if this is published on GitHub Pages, these same links will work as public client-facing URLs.
+    </p>
+  </main>
+</body>
+
+</html>

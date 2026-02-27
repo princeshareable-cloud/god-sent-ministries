@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leadership — God Sent Ministries</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .page-hero {
+            padding: clamp(8rem, 14vw, 12rem) 0 clamp(4rem, 8vw, 6rem);
+            background: var(--black);
+        }
+
+        .page-hero .eyebrow {
+            color: var(--accent-light);
+        }
+
+        .page-hero .heading-xl {
+            color: var(--white);
+            max-width: 700px;
+        }
+
+        .page-hero .body-lg {
+            color: var(--light-gray);
+        }
+
+        .leader-feature {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 5rem;
+            align-items: start;
+            padding: 4rem 0;
+            border-bottom: 1px solid var(--sand);
+        }
+
+        .leader-feature:last-child {
+            border-bottom: none;
+        }
+
+        .leader-feature:nth-child(even) {
+            direction: rtl;
+        }
+
+        .leader-feature:nth-child(even)>* {
+            direction: ltr;
+        }
+
+        .leader-photo {
+            width: 100%;
+            aspect-ratio: 3/4;
+            object-fit: cover;
+            object-position: top center;
+            border-radius: 12px;
+            filter: saturate(0.9) contrast(1.05);
+            transition: transform 0.8s var(--ease);
+        }
+
+        .leader-feature:hover .leader-photo {
+            transform: scale(1.02);
+        }
+
+        .leader-info {
+            padding-top: 2rem;
+        }
+
+        .leader-role {
+            font-family: var(--heading);
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .leader-role::before {
+            content: '';
+            width: 20px;
+            height: 2px;
+            background: var(--accent);
+        }
+
+        .leader-name {
+            font-family: var(--heading);
+            font-size: clamp(2rem, 4vw, 3.2rem);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+        }
+
+        .leader-bio {
+            font-size: 1.05rem;
+            line-height: 1.9;
+            color: var(--gray);
+            margin-bottom: 2rem;
+        }
+
+        .leader-quote {
+            font-family: var(--heading);
+            font-size: 1.15rem;
+            font-weight: 400;
+            font-style: italic;
+            color: var(--charcoal);
+            padding-left: 1.5rem;
+            border-left: 3px solid var(--accent);
+            line-height: 1.6;
+        }
+
+        @media (max-width: 900px) {
+            .leader-feature {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .leader-feature:nth-child(even) {
+                direction: ltr;
+            }
+
+            .leader-info {
+                padding-top: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="site-nav" id="nav">
+        <a href="index.html" class="nav-logo">God Sent<span class="dot">.</span></a>
+        <div class="nav-toggle" onclick="document.querySelector('.nav-menu').classList.toggle('open')">
+            <span></span><span></span><span></span></div>
+        <div class="nav-menu">
+            <a href="index.html">Home</a><a href="about.html">About</a><a href="ministries.html">Ministries</a><a
+                href="leadership.html" class="active">Leadership</a><a href="contact.html">Contact</a><a
+                href="contact.html" class="nav-btn">Visit Us</a>
+        </div>
+    </nav>
+
+    <section class="page-hero">
+        <div class="wrap">
+            <div class="eyebrow sr">Shepherds of the Flock</div>
+            <h1 class="heading-xl sr sr-d1">Our Leadership</h1>
+            <p class="body-lg sr sr-d2">Called to serve, equipped to lead, and passionate about building up the body of
+                Christ.</p>
+        </div>
+    </section>
+
+    <section class="sec">
+        <div class="wrap">
+            <div class="leader-feature sr">
+                <img src="img/pastor-david.jpeg" alt="Apostle David Mugerwa" class="leader-photo">
+                <div class="leader-info">
+                    <div class="leader-role">Senior Pastor &amp; Founder</div>
+                    <h2 class="leader-name">Apostle David Mugerwa</h2>
+                    <p class="leader-bio">Apostle David holds a Bachelor&rsquo;s degree in Christian Ministry and a
+                        Master&rsquo;s degree in Evangelism &amp; Leadership from Wheaton College. He is passionate
+                        about church planting, evangelism, and transforming lives through the power of the Gospel.</p>
+                    <p class="leader-bio">His vision for God Sent Ministries was born out of a deep calling to reach
+                        those who have never experienced the presence and power of God — starting with a simple prayer
+                        altar and growing into a thriving global community.</p>
+                    <blockquote class="leader-quote">&ldquo;Our mandate is clear: rescue, recover, and restore.&rdquo;
+                    </blockquote>
+                </div>
+            </div>
+            <div class="leader-feature sr">
+                <img src="img/pastor-debbie.jpeg" alt="Pastor Debbie Mugerwa" class="leader-photo">
+                <div class="leader-info">
+                    <div class="leader-role">Co-Pastor</div>
+                    <h2 class="leader-name">Pastor Debbie Mugerwa</h2>
+                    <p class="leader-bio">Pastor Debbie holds a diploma in Early Childhood Development from Concordia
+                        University. Her passion is rooted in teaching the Word of God, leading children&rsquo;s
+                        ministries, and counseling women through the most challenging seasons of life.</p>
+                    <p class="leader-bio">She brings warmth, wisdom, and a deep commitment to nurturing the next
+                        generation of believers at God Sent Ministries.</p>
+                    <blockquote class="leader-quote">&ldquo;God&rsquo;s love is the answer to every question the heart
+                        asks.&rdquo;</blockquote>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="site-footer">
+        <div class="wrap">
+            <div class="footer-grid">
+                <div>
+                    <div class="footer-brand">God Sent<span class="dot">.</span></div>
+                    <p class="footer-desc">A Christian ministry born from prayer, reaching communities across different
+                        spheres of the world.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Navigate</h4><a href="index.html">Home</a><a href="about.html">About</a><a
+                        href="ministries.html">Ministries</a><a href="leadership.html">Leadership</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Connect</h4><a href="contact.html">Visit Us</a><a
+                        href="mailto:contact@godsentministries.org">Email Us</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Location</h4><a href="#">Crystal Lake, IL</a><a href="#">Online via Zoom</a>
+                </div>
+            </div>
+            <div class="footer-bottom"><span>&copy; 2025 God Sent Ministries</span><span>Crystal Lake, Illinois</span>
+            </div>
+        </div>
+    </footer>
+    <script>
+        const nav = document.getElementById('nav'); window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 60));
+        const obs = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) e.target.classList.add('vis'); }), { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
+        document.querySelectorAll('.sr').forEach(el => obs.observe(el));
+    </script>
+</body>
+
+</html>

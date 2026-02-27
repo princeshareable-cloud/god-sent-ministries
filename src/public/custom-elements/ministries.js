@@ -1,251 +1,190 @@
 class MinistriesSection extends HTMLElement {
-    constructor() {
-        super();
-        this.attachShadow({ mode: 'open' });
-    }
+  constructor() {
+    super();
+    this.attachShadow({ mode: 'open' });
+  }
 
-    static get observedAttributes() {
-        return [
-            'heading',
-            'ministry-1-title', 'ministry-1-desc',
-            'ministry-2-title', 'ministry-2-desc',
-            'ministry-3-title', 'ministry-3-desc',
-            'ministry-4-title', 'ministry-4-desc'
-        ];
-    }
+  static get observedAttributes() {
+    return ['heading', 'ministry-1-title', 'ministry-1-desc', 'ministry-2-title', 'ministry-2-desc', 'ministry-3-title', 'ministry-3-desc', 'ministry-4-title', 'ministry-4-desc'];
+  }
 
-    attributeChangedCallback(name, oldValue, newValue) {
-        if (oldValue !== newValue) {
-            this.render();
-        }
-    }
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (oldValue !== newValue) this.render();
+  }
 
-    connectedCallback() {
-        // Default values based on the initial email
-        if (!this.hasAttribute('heading')) this.setAttribute('heading', 'OUR MINISTRIES');
+  connectedCallback() {
+    if (!this.hasAttribute('heading')) this.setAttribute('heading', 'Our Ministries');
+    if (!this.hasAttribute('ministry-1-title')) this.setAttribute('ministry-1-title', 'Church Ministry');
+    if (!this.hasAttribute('ministry-1-desc')) this.setAttribute('ministry-1-desc', 'Helping members learn more about God, worship meaningfully, and grow closer to God through spiritual growth and discipleship.');
+    if (!this.hasAttribute('ministry-2-title')) this.setAttribute('ministry-2-title', 'Evangelism Outreach');
+    if (!this.hasAttribute('ministry-2-desc')) this.setAttribute('ministry-2-desc', 'Sharing the message and teachings of Jesus Christ with the intention of bringing people to Him.');
+    if (!this.hasAttribute('ministry-3-title')) this.setAttribute('ministry-3-title', 'Hospital Ministry');
+    if (!this.hasAttribute('ministry-3-desc')) this.setAttribute('ministry-3-desc', 'Providing support and services to people who are hospitalized, in nursing homes, or homebound.');
+    if (!this.hasAttribute('ministry-4-title')) this.setAttribute('ministry-4-title', 'Prisons & Orphanages');
+    if (!this.hasAttribute('ministry-4-desc')) this.setAttribute('ministry-4-desc', 'Serving incarcerated people and their families, and helping children in need.');
+    this.render();
+    this._observeScroll();
+  }
 
-        if (!this.hasAttribute('ministry-1-title')) this.setAttribute('ministry-1-title', 'Church Ministry');
-        if (!this.hasAttribute('ministry-1-desc')) this.setAttribute('ministry-1-desc', 'Helping members learn more about God, worship meaningfully, and grow closer to God through spiritual growth and discipleship.');
+  _observeScroll() {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    this.shadowRoot.querySelectorAll('.card').forEach(el => observer.observe(el));
+  }
 
-        if (!this.hasAttribute('ministry-2-title')) this.setAttribute('ministry-2-title', 'Evangelism');
-        if (!this.hasAttribute('ministry-2-desc')) this.setAttribute('ministry-2-desc', 'Sharing the message and teachings of Jesus Christ with the intention of bringing people to Him.');
+  render() {
+    const g = (n) => this.getAttribute(n) || '';
+    const icons = ['⛪', '📖', '🏥', '🤝'];
 
-        if (!this.hasAttribute('ministry-3-title')) this.setAttribute('ministry-3-title', 'Hospital Outreach');
-        if (!this.hasAttribute('ministry-3-desc')) this.setAttribute('ministry-3-desc', 'Providing support and services to people who are hospitalized, in nursing homes, or homebound, including prayer and Holy Communion.');
-
-        if (!this.hasAttribute('ministry-4-title')) this.setAttribute('ministry-4-title', 'Prisons & Orphanages');
-        if (!this.hasAttribute('ministry-4-desc')) this.setAttribute('ministry-4-desc', 'Serving incarcerated people and their families, and helping children in need by providing resources, education, and care.');
-
-        this.render();
-    }
-
-    render() {
-        const getAttr = (name) => this.getAttribute(name) || '';
-
-        this.shadowRoot.innerHTML = `
+    this.shadowRoot.innerHTML = `
       <style>
-        :host {
-          display: block;
-          width: 100%;
-          font-family: 'Helvetica Neue', Arial, sans-serif;
-          background-color: #000000;
-          color: #ffffff;
-          padding: 8rem 0;
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Raleway:wght@300;400;500;600&display=swap');
+
+        :host { display: block; width: 100%; }
+
+        .section {
+          padding: 8rem 2rem;
+          background: linear-gradient(180deg, #0a0015 0%, #05000d 100%);
           position: relative;
         }
 
-        /* Subtle glowing background accent */
-        :host::before {
-          content: '';
-          position: absolute;
-          top: 0;
-          right: 0;
-          width: 50vw;
-          height: 100%;
-          background: linear-gradient(90deg, transparent 0%, rgba(20, 25, 30, 0.4) 100%);
-          pointer-events: none;
-        }
+        .container { max-width: 1200px; margin: 0 auto; }
 
-        .container {
-          max-width: 1400px;
-          margin: 0 auto;
-          padding: 0 2rem;
-          position: relative;
-          z-index: 10;
-        }
-
-        .section-header {
-          display: flex;
-          align-items: flex-end;
-          justify-content: space-between;
+        .header {
+          text-align: center;
           margin-bottom: 5rem;
-          border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-          padding-bottom: 2rem;
+        }
+
+        .label {
+          font-family: 'Raleway', sans-serif;
+          font-size: 0.75rem;
+          font-weight: 600;
+          letter-spacing: 0.35em;
+          text-transform: uppercase;
+          color: #d4af37;
+          margin-bottom: 1rem;
         }
 
         h2 {
-          font-size: clamp(2.5rem, 6vw, 4.5rem);
-          font-weight: 300;
-          letter-spacing: 0.05em;
-          text-transform: uppercase;
-          margin: 0;
-          position: relative;
+          font-family: 'Playfair Display', Georgia, serif;
+          font-size: clamp(2.5rem, 5vw, 4rem);
+          font-weight: 700;
           color: #ffffff;
-          line-height: 1;
+          margin: 0;
         }
 
         .grid {
           display: grid;
           grid-template-columns: repeat(2, 1fr);
-          gap: 2px;
-          background-color: rgba(255, 255, 255, 0.1);
+          gap: 2rem;
         }
 
         .card {
-          background-color: #050505;
-          padding: 4rem 3rem;
-          display: flex;
-          flex-direction: column;
-          justify-content: space-between;
-          min-height: 300px;
-          transition: background-color 0.4s ease, transform 0.4s ease;
           position: relative;
+          padding: 3rem;
+          border-radius: 16px;
+          background: linear-gradient(135deg, rgba(25, 10, 50, 0.8), rgba(15, 5, 30, 0.9));
+          border: 1px solid rgba(138, 43, 226, 0.2);
           overflow: hidden;
+          transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+          cursor: default;
+          opacity: 0;
+          transform: translateY(40px);
         }
+
+        .card.visible {
+          opacity: 1;
+          transform: translateY(0);
+        }
+        .card:nth-child(2).visible { transition-delay: 0.1s; }
+        .card:nth-child(3).visible { transition-delay: 0.2s; }
+        .card:nth-child(4).visible { transition-delay: 0.3s; }
 
         .card::before {
           content: '';
           position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, transparent 100%);
+          inset: 0;
+          border-radius: 16px;
+          background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), transparent 70%);
           opacity: 0;
-          transition: opacity 0.4s ease;
+          transition: opacity 0.5s;
         }
 
         .card:hover {
-          background-color: #0a0b0c;
+          border-color: rgba(212, 175, 55, 0.4);
+          transform: translateY(-8px);
+          box-shadow: 0 25px 50px rgba(100, 50, 180, 0.25), 0 0 0 1px rgba(212, 175, 55, 0.15);
         }
 
-        .card:hover::before {
-          opacity: 1;
+        .card:hover::before { opacity: 1; }
+
+        .card-icon {
+          font-size: 2.5rem;
+          margin-bottom: 1.5rem;
+          display: block;
         }
 
-        .card-number {
-          font-family: monospace;
-          font-size: 1rem;
-          color: #505050;
-          margin-bottom: 2rem;
+        .card-num {
+          font-family: 'Raleway', sans-serif;
+          position: absolute;
+          top: 2rem;
+          right: 2rem;
+          font-size: 4rem;
+          font-weight: 700;
+          color: rgba(138, 43, 226, 0.1);
+          line-height: 1;
         }
 
         h3 {
-          font-size: 2rem;
-          font-weight: 400;
-          margin: 0 0 1.5rem 0;
-          letter-spacing: 0.02em;
+          font-family: 'Playfair Display', Georgia, serif;
+          font-size: 1.6rem;
+          font-weight: 700;
+          color: #ffffff;
+          margin: 0 0 1rem;
+          position: relative;
+          z-index: 1;
         }
 
         p {
-          font-size: 1.1rem;
-          line-height: 1.7;
-          color: #808080;
+          font-family: 'Raleway', sans-serif;
+          font-size: 1rem;
+          line-height: 1.8;
+          color: rgba(255, 255, 255, 0.6);
           margin: 0;
-          transition: color 0.4s ease;
-        }
-
-        .card:hover p {
-          color: #b0b0b0;
-        }
-
-        .arrow {
-          margin-top: 3rem;
-          width: 40px;
-          height: 1px;
-          background-color: #505050;
           position: relative;
-          transition: width 0.4s ease, background-color 0.4s ease;
+          z-index: 1;
+          transition: color 0.4s;
         }
 
-        .arrow::after {
-          content: '';
-          position: absolute;
-          right: 0;
-          top: -4px;
-          width: 8px;
-          height: 8px;
-          border-top: 1px solid #505050;
-          border-right: 1px solid #505050;
-          transform: rotate(45deg);
-          transition: border-color 0.4s ease;
-        }
+        .card:hover p { color: rgba(255, 255, 255, 0.85); }
 
-        .card:hover .arrow {
-          width: 60px;
-          background-color: #ffffff;
-        }
-
-        .card:hover .arrow::after {
-          border-color: #ffffff;
-        }
-
-        @media (max-width: 900px) {
-          .grid {
-            grid-template-columns: 1fr;
-          }
-          .card {
-            padding: 3rem 2rem;
-            min-height: auto;
-          }
+        @media (max-width: 768px) {
+          .grid { grid-template-columns: 1fr; }
+          .card { padding: 2.5rem; }
+          .section { padding: 5rem 1.5rem; }
         }
       </style>
-      
-      <div class="container">
-        <div class="section-header">
-          <h2>${getAttr('heading')}</h2>
-        </div>
-        
-        <div class="grid">
-          <div class="card">
-            <div class="card-number">01</div>
-            <div>
-              <h3>${getAttr('ministry-1-title')}</h3>
-              <p>${getAttr('ministry-1-desc')}</p>
-              <div class="arrow"></div>
-            </div>
+
+      <div class="section">
+        <div class="container">
+          <div class="header">
+            <div class="label">What We Do</div>
+            <h2>${g('heading')}</h2>
           </div>
-          
-          <div class="card">
-            <div class="card-number">02</div>
-            <div>
-              <h3>${getAttr('ministry-2-title')}</h3>
-              <p>${getAttr('ministry-2-desc')}</p>
-              <div class="arrow"></div>
-            </div>
-          </div>
-          
-          <div class="card">
-            <div class="card-number">03</div>
-            <div>
-              <h3>${getAttr('ministry-3-title')}</h3>
-              <p>${getAttr('ministry-3-desc')}</p>
-              <div class="arrow"></div>
-            </div>
-          </div>
-          
-          <div class="card">
-            <div class="card-number">04</div>
-            <div>
-              <h3>${getAttr('ministry-4-title')}</h3>
-              <p>${getAttr('ministry-4-desc')}</p>
-              <div class="arrow"></div>
-            </div>
+          <div class="grid">
+            ${[1, 2, 3, 4].map(i => `
+              <div class="card">
+                <span class="card-num">0${i}</span>
+                <span class="card-icon">${icons[i - 1]}</span>
+                <h3>${g('ministry-' + i + '-title')}</h3>
+                <p>${g('ministry-' + i + '-desc')}</p>
+              </div>
+            `).join('')}
           </div>
         </div>
       </div>
     `;
-    }
+  }
 }
-
 customElements.define('ministries-section', MinistriesSection);
