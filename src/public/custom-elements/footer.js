@@ -5,7 +5,7 @@ class FooterSection extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ['location', 'email', 'phone'];
+    return ['brand-text', 'copy-text'];
   }
 
   attributeChangedCallback(name, oldValue, newValue) {
@@ -13,141 +13,55 @@ class FooterSection extends HTMLElement {
   }
 
   connectedCallback() {
-    if (!this.hasAttribute('location')) this.setAttribute('location', 'Crystal Lake, Illinois-USA');
-    if (!this.hasAttribute('email')) this.setAttribute('email', 'contact@godsentministries.org');
-    if (!this.hasAttribute('phone')) this.setAttribute('phone', '');
+    if (!this.hasAttribute('brand-text')) this.setAttribute('brand-text', 'God Sent Ministries');
+    if (!this.hasAttribute('copy-text')) this.setAttribute('copy-text', '&copy; 2025 God Sent Ministries. All rights reserved. Crystal Lake, Illinois.');
     this.render();
   }
 
   render() {
-    const g = (n) => this.getAttribute(n) || '';
+    const brand = this.getAttribute('brand-text');
+    const copy = this.getAttribute('copy-text');
 
     this.shadowRoot.innerHTML = `
       <style>
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Raleway:wght@300;400;500;600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:wght@300;400;500;600;700&display=swap');
 
-        :host { display: block; width: 100%; }
-
-        .footer {
-          background: linear-gradient(180deg, #0a0015 0%, #020005 100%);
-          position: relative;
-          overflow: hidden;
+        :host {
+          display: block;
+          width: 100%;
+          --serif: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+          --sans: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
         }
 
-        .footer::before {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          height: 1px;
-          background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.4), transparent);
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        footer {
+          padding: 3rem 2rem;
+          background: #0f0d0b;
+          text-align: center;
+          font-family: var(--sans);
         }
 
-        .main {
-          max-width: 1200px;
-          margin: 0 auto;
-          padding: 5rem 2rem;
-          display: grid;
-          grid-template-columns: 2fr 1fr 1fr;
-          gap: 4rem;
-        }
-
-        .brand h2 {
-          font-family: 'Playfair Display', Georgia, serif;
-          font-size: 2rem;
-          font-weight: 700;
-          margin: 0 0 1rem;
-          background: linear-gradient(135deg, #ffffff, #d4af37);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-        }
-
-        .brand p {
-          font-family: 'Raleway', sans-serif;
-          font-size: 0.95rem;
-          line-height: 1.8;
-          color: rgba(255, 255, 255, 0.4);
-          max-width: 350px;
-        }
-
-        .col-title {
-          font-family: 'Raleway', sans-serif;
-          font-size: 0.75rem;
-          font-weight: 600;
-          letter-spacing: 0.25em;
-          text-transform: uppercase;
-          color: #d4af37;
-          margin-bottom: 1.5rem;
-        }
-
-        ul { list-style: none; padding: 0; margin: 0; }
-
-        li {
-          font-family: 'Raleway', sans-serif;
-          color: rgba(255, 255, 255, 0.5);
-          font-size: 0.95rem;
+        .footer-brand {
+          font-family: var(--serif);
+          font-size: 1rem;
+          color: rgba(246, 241, 235, 0.4);
           margin-bottom: 0.8rem;
-          line-height: 1.6;
         }
 
-        a {
-          color: rgba(255, 255, 255, 0.7);
-          text-decoration: none;
-          transition: color 0.3s;
-        }
-
-        a:hover { color: #d4af37; }
-
-        .bottom {
-          max-width: 1200px;
-          margin: 0 auto;
-          padding: 2rem;
-          border-top: 1px solid rgba(255, 255, 255, 0.05);
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-        }
-
-        .bottom span {
-          font-family: 'Raleway', sans-serif;
+        p {
           font-size: 0.8rem;
-          color: rgba(255, 255, 255, 0.25);
-        }
-
-        @media (max-width: 900px) {
-          .main { grid-template-columns: 1fr; gap: 3rem; padding: 3rem 1.5rem; }
-          .bottom { flex-direction: column; gap: 0.5rem; text-align: center; }
+          color: rgba(246, 241, 235, 0.25);
+          letter-spacing: 0.05em;
         }
       </style>
 
-      <footer class="footer">
-        <div class="main">
-          <div class="brand">
-            <h2>God Sent Ministries</h2>
-            <p>Started in 2022 as a prayer altar, now reaching communities across different spheres of the world through the presence and power of God.</p>
-          </div>
-          <div>
-            <div class="col-title">Location</div>
-            <ul>
-              <li>${g('location')}</li>
-              <li>Online Campus via Zoom</li>
-            </ul>
-          </div>
-          <div>
-            <div class="col-title">Get In Touch</div>
-            <ul>
-              <li><a href="mailto:${g('email')}">${g('email')}</a></li>
-              ${g('phone') ? '<li><a href="tel:' + g('phone') + '">' + g('phone') + '</a></li>' : ''}
-            </ul>
-          </div>
-        </div>
-        <div class="bottom">
-          <span>&copy; ${new Date().getFullYear()} God Sent Ministries. All rights reserved.</span>
-          <span>Designed with love & purpose.</span>
-        </div>
+      <footer>
+        <div class="footer-brand">${brand}</div>
+        <p>${copy}</p>
       </footer>
     `;
   }
 }
+
 customElements.define('footer-section', FooterSection);
