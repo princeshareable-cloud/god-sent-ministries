@@ -88,6 +88,7 @@ class GsmHomePage extends HTMLElement {
   constructor() {
     super();
     this._heightListener = this._notifyHeight.bind(this);
+    this._toggleMenuListener = this._toggleMenu.bind(this);
   }
 
   connectedCallback() {
@@ -115,6 +116,7 @@ class GsmHomePage extends HTMLElement {
       ensureFonts();
       await ensureScripts(this.getAttribute('base-url'));
       this._renderPage();
+      this._wireNavigation();
       this._attachImageListeners();
       this._notifyHeight();
       window.setTimeout(this._heightListener, 200);
@@ -199,12 +201,102 @@ class GsmHomePage extends HTMLElement {
           font-family: 'DM Sans', Arial, sans-serif;
         }
 
+        .gsm-site-header,
+        .gsm-site-header * {
+          box-sizing: border-box;
+        }
+
+        .gsm-site-header {
+          position: sticky;
+          top: 0;
+          z-index: 99;
+          width: 100%;
+          border-bottom: 1px solid rgba(246, 241, 235, 0.08);
+          background: rgba(26, 23, 20, 0.88);
+          backdrop-filter: blur(14px);
+          -webkit-backdrop-filter: blur(14px);
+        }
+
+        .gsm-site-header-inner {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 24px;
+          width: 100%;
+          max-width: 1240px;
+          margin: 0 auto;
+          padding: 14px 24px;
+        }
+
+        .gsm-brand {
+          color: #f6f1eb;
+          font-family: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+          font-size: 30px;
+          font-weight: 600;
+          letter-spacing: 0.01em;
+          text-decoration: none;
+          white-space: nowrap;
+        }
+
+        .gsm-brand span {
+          color: #d4a05a;
+        }
+
+        .gsm-nav-toggle {
+          display: none;
+          border: 1px solid rgba(246, 241, 235, 0.2);
+          background: transparent;
+          color: rgba(246, 241, 235, 0.9);
+          font-family: 'DM Sans', Arial, sans-serif;
+          font-size: 11px;
+          font-weight: 600;
+          letter-spacing: 0.14em;
+          text-transform: uppercase;
+          padding: 10px 14px;
+          cursor: pointer;
+        }
+
+        .gsm-nav {
+          display: flex;
+          align-items: center;
+          gap: 22px;
+        }
+
+        .gsm-nav a {
+          color: rgba(246, 241, 235, 0.8);
+          text-decoration: none;
+          font-size: 12px;
+          font-weight: 600;
+          letter-spacing: 0.13em;
+          text-transform: uppercase;
+          transition: color 0.25s ease;
+        }
+
+        .gsm-nav a:hover {
+          color: #d4a05a;
+        }
+
+        .gsm-nav .gsm-nav-cta {
+          padding: 11px 18px;
+          background: #b47b3a;
+          color: #fff;
+        }
+
+        .gsm-nav .gsm-nav-cta:hover {
+          color: #fff;
+          background: #8a5d2a;
+        }
+
         .gsm-page-stack {
           display: block;
           width: 100%;
           margin: 0;
           padding: 0;
           background: #1a1714;
+        }
+
+        .gsm-page-stack [id] {
+          scroll-margin-top: 90px;
         }
 
         .gsm-page-stack > hero-section,
@@ -221,8 +313,66 @@ class GsmHomePage extends HTMLElement {
           padding: 0;
           line-height: normal;
         }
+
+        @media (max-width: 980px) {
+          .gsm-site-header-inner {
+            padding: 12px 16px;
+          }
+
+          .gsm-brand {
+            font-size: 26px;
+          }
+
+          .gsm-nav-toggle {
+            display: inline-block;
+          }
+
+          .gsm-nav {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            display: none;
+            flex-direction: column;
+            align-items: stretch;
+            gap: 0;
+            border-bottom: 1px solid rgba(246, 241, 235, 0.08);
+            background: rgba(26, 23, 20, 0.97);
+          }
+
+          .gsm-nav.is-open {
+            display: flex;
+          }
+
+          .gsm-nav a {
+            display: block;
+            padding: 14px 16px;
+            border-top: 1px solid rgba(246, 241, 235, 0.08);
+            text-align: left;
+          }
+
+          .gsm-nav .gsm-nav-cta {
+            margin: 12px 16px 16px;
+            text-align: center;
+          }
+        }
       </style>
-      <main class="gsm-page-stack" id="home">
+      <header class="gsm-site-header">
+        <div class="gsm-site-header-inner">
+          <a class="gsm-brand" href="#home">God <span>Sent</span> Ministries</a>
+          <button class="gsm-nav-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false">Menu</button>
+          <nav class="gsm-nav" aria-label="Primary">
+            <a href="#home">Home</a>
+            <a href="#vision">Vision</a>
+            <a href="#about">About</a>
+            <a href="#ministries">Ministries</a>
+            <a href="#leadership">Leadership</a>
+            <a href="#contact">Contact</a>
+            <a href="#contact" class="gsm-nav-cta">Plan A Visit</a>
+          </nav>
+        </div>
+      </header>
+      <main class="gsm-page-stack">
         <hero-section></hero-section>
         <vision-section></vision-section>
         <about-section></about-section>
@@ -232,6 +382,52 @@ class GsmHomePage extends HTMLElement {
         <footer-section></footer-section>
       </main>
     `;
+  }
+
+  _wireNavigation() {
+    const toggle = this.querySelector('.gsm-nav-toggle');
+    const nav = this.querySelector('.gsm-nav');
+
+    if (toggle) {
+      toggle.addEventListener('click', this._toggleMenuListener);
+    }
+
+    this.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+      anchor.addEventListener('click', (event) => {
+        const href = anchor.getAttribute('href');
+        if (!href || href.length < 2) {
+          return;
+        }
+
+        const target = this.querySelector(href);
+        if (!target) {
+          return;
+        }
+
+        event.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+        if (nav && nav.classList.contains('is-open')) {
+          nav.classList.remove('is-open');
+        }
+
+        if (toggle) {
+          toggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+    });
+  }
+
+  _toggleMenu() {
+    const nav = this.querySelector('.gsm-nav');
+    const toggle = this.querySelector('.gsm-nav-toggle');
+    if (!nav || !toggle) {
+      return;
+    }
+
+    nav.classList.toggle('is-open');
+    toggle.setAttribute('aria-expanded', nav.classList.contains('is-open') ? 'true' : 'false');
+    this._notifyHeight();
   }
 
   _attachImageListeners() {
