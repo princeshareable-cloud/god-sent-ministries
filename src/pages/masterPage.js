@@ -35,8 +35,7 @@ $w.onReady(function () {
             return;
         }
 
-        el.scrollTo()
-            .then(() => wixWindow.scrollBy(0, Math.max(0, Math.ceil(offsetTop) - 80), { scrollAnimation: true }))
+        wixWindow.scrollTo(0, Math.max(0, Math.ceil(offsetTop) - 80), { scrollAnimation: true })
             .catch(() => {});
     };
 
