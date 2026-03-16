@@ -13,8 +13,33 @@ const SECTION_DEFS = [
   { tag: 'footer-section', file: 'footer.js' }
 ];
 
+function detectBaseUrlFromLoadedScript() {
+  if (typeof document === 'undefined') {
+    return null;
+  }
+
+  const scripts = Array.from(document.getElementsByTagName('script'));
+  const matchedSrc = scripts
+    .map((script) => script.src)
+    .filter(Boolean)
+    .reverse()
+    .find((src) => /\/custom-elements\/page\.js(?:[?#].*)?$/i.test(src));
+
+  if (!matchedSrc) {
+    return null;
+  }
+
+  const cleanSrc = matchedSrc.split('#')[0].split('?')[0];
+  const index = cleanSrc.lastIndexOf('/');
+  if (index <= 0) {
+    return null;
+  }
+
+  return cleanSrc.slice(0, index);
+}
+
 function normalizeBaseUrl(baseUrl) {
-  return String(baseUrl || DEFAULT_BASE_URL).replace(/\/+$/, '');
+  return String(baseUrl || detectBaseUrlFromLoadedScript() || DEFAULT_BASE_URL).replace(/\/+$/, '');
 }
 
 function ensureFonts() {
