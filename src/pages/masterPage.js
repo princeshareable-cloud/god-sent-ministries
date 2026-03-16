@@ -3,10 +3,10 @@
 $w.onReady(function () {
     // Auto-resize any custom element that reports its content height.
     $w('CustomElement').forEach((el) => {
-        el.onMessage((event) => {
-            const data = (event && event.data) || {};
+        el.on('gsmHeight', (event) => {
+            const data = (event && event.detail) || {};
             const rawHeight = Number(data.height);
-            if (data.type !== 'gsm-home-page-height' || !Number.isFinite(rawHeight)) {
+            if (!Number.isFinite(rawHeight)) {
                 return;
             }
 

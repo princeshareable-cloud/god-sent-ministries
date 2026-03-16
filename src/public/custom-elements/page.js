@@ -89,6 +89,9 @@ class GsmHomePage extends HTMLElement {
     super();
     this._heightListener = this._notifyHeight.bind(this);
     this._toggleMenuListener = this._toggleMenu.bind(this);
+    this._anchorClickListener = this._handleAnchorClicks.bind(this);
+    this._lastSentHeight = 0;
+    this._resizeObserver = null;
   }
 
   connectedCallback() {
@@ -98,10 +101,16 @@ class GsmHomePage extends HTMLElement {
     this._renderLoading();
     this._loadSections();
     window.addEventListener('resize', this._heightListener);
+    this.addEventListener('click', this._anchorClickListener, true);
   }
 
   disconnectedCallback() {
     window.removeEventListener('resize', this._heightListener);
+    this.removeEventListener('click', this._anchorClickListener, true);
+    if (this._resizeObserver) {
+      this._resizeObserver.disconnect();
+      this._resizeObserver = null;
+    }
   }
 
   attributeChangedCallback(name, oldValue, newValue) {
@@ -117,10 +126,12 @@ class GsmHomePage extends HTMLElement {
       await ensureScripts(this.getAttribute('base-url'));
       this._renderPage();
       this._wireNavigation();
+      this._wireAutoHeight();
       this._attachImageListeners();
       this._notifyHeight();
       window.setTimeout(this._heightListener, 200);
       window.setTimeout(this._heightListener, 900);
+      window.setTimeout(this._heightListener, 1600);
     } catch (error) {
       this._renderError(error instanceof Error ? error.message : String(error));
       this._notifyHeight();
@@ -386,36 +397,87 @@ class GsmHomePage extends HTMLElement {
 
   _wireNavigation() {
     const toggle = this.querySelector('.gsm-nav-toggle');
-    const nav = this.querySelector('.gsm-nav');
 
     if (toggle) {
       toggle.addEventListener('click', this._toggleMenuListener);
     }
+  }
 
-    this.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-      anchor.addEventListener('click', (event) => {
-        const href = anchor.getAttribute('href');
-        if (!href || href.length < 2) {
-          return;
-        }
+  _handleAnchorClicks(event) {
+    const path = event.composedPath ? event.composedPath() : [];
+    const anchor = path.find((node) => node && node.tagName && String(node.tagName).toLowerCase() === 'a');
+    if (!anchor || typeof anchor.getAttribute !== 'function') {
+      return;
+    }
 
-        const target = this.querySelector(href);
-        if (!target) {
-          return;
-        }
+    const href = anchor.getAttribute('href');
+    if (!href || href.charAt(0) !== '#') {
+      return;
+    }
 
-        event.preventDefault();
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    event.preventDefault();
+    event.stopPropagation();
 
-        if (nav && nav.classList.contains('is-open')) {
-          nav.classList.remove('is-open');
-        }
+    const target = this._findHashTarget(href);
+    if (!target) {
+      return;
+    }
 
-        if (toggle) {
-          toggle.setAttribute('aria-expanded', 'false');
-        }
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    const nav = this.querySelector('.gsm-nav');
+    const toggle = this.querySelector('.gsm-nav-toggle');
+    if (nav && nav.classList.contains('is-open')) {
+      nav.classList.remove('is-open');
+    }
+
+    if (toggle) {
+      toggle.setAttribute('aria-expanded', 'false');
+    }
+  }
+
+  _findHashTarget(hash) {
+    if (!hash || hash.length < 2) {
+      return null;
+    }
+
+    let target = null;
+    try {
+      target = this.querySelector(hash);
+    } catch (error) {
+      return null;
+    }
+
+    if (!target && hash === '#home') {
+      target = this.querySelector('.gsm-page-stack') || this;
+    }
+
+    return target;
+  }
+
+  _wireAutoHeight() {
+    const stack = this.querySelector('.gsm-page-stack');
+    if (!stack) {
+      return;
+    }
+
+    if (this._resizeObserver) {
+      this._resizeObserver.disconnect();
+      this._resizeObserver = null;
+    }
+
+    if (typeof ResizeObserver !== 'undefined') {
+      this._resizeObserver = new ResizeObserver(() => {
+        this._notifyHeight();
       });
-    });
+      this._resizeObserver.observe(stack);
+    }
+
+    // Safety interval for late font/image/layout shifts.
+    window.setTimeout(this._heightListener, 250);
+    window.setTimeout(this._heightListener, 700);
+    window.setTimeout(this._heightListener, 1300);
+    window.setTimeout(this._heightListener, 2200);
   }
 
   _toggleMenu() {
@@ -450,15 +512,18 @@ class GsmHomePage extends HTMLElement {
       return;
     }
 
-    if (window.parent && window.parent !== window) {
-      window.parent.postMessage(
-        {
-          type: 'gsm-home-page-height',
-          height
-        },
-        '*'
-      );
+    if (height === this._lastSentHeight) {
+      return;
     }
+
+    this._lastSentHeight = height;
+
+    // Wix CustomElement API listens via $w('#customElement').on('eventName', ...)
+    this.dispatchEvent(
+      new CustomEvent('gsmHeight', {
+        detail: { height }
+      })
+    );
   }
 }
 
