@@ -123,6 +123,7 @@ class GsmHomePage extends HTMLElement {
     this.style.display = 'block';
     this.style.width = '100%';
     this.style.height = 'auto';
+    this.style.overflow = 'visible';
     this._renderLoading();
     this._loadSections();
     window.addEventListener('resize', this._heightListener);
@@ -430,7 +431,9 @@ class GsmHomePage extends HTMLElement {
 
   _handleAnchorClicks(event) {
     const path = event.composedPath ? event.composedPath() : [];
-    const anchor = path.find((node) => node && node.tagName && String(node.tagName).toLowerCase() === 'a');
+    const pathAnchor = path.find((node) => node && node.tagName && String(node.tagName).toLowerCase() === 'a');
+    const directTarget = event.target && typeof event.target.closest === 'function' ? event.target.closest('a[href^="#"]') : null;
+    const anchor = pathAnchor || directTarget;
     if (!anchor || typeof anchor.getAttribute !== 'function') {
       return;
     }
@@ -442,6 +445,9 @@ class GsmHomePage extends HTMLElement {
 
     event.preventDefault();
     event.stopPropagation();
+    if (typeof event.stopImmediatePropagation === 'function') {
+      event.stopImmediatePropagation();
+    }
 
     const target = this._findHashTarget(href);
     if (!target) {
@@ -458,8 +464,14 @@ class GsmHomePage extends HTMLElement {
       })
     );
 
-    // Fallback for non-Wix environments where the iframe itself can scroll.
-    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    this.dispatchEvent(
+      new CustomEvent('gsmnavigate', {
+        detail: {
+          target: href.slice(1),
+          offsetTop
+        }
+      })
+    );
 
     const nav = this.querySelector('.gsm-nav');
     const toggle = this.querySelector('.gsm-nav-toggle');
@@ -568,6 +580,12 @@ class GsmHomePage extends HTMLElement {
     // Wix CustomElement API listens via $w('#customElement').on('eventName', ...)
     this.dispatchEvent(
       new CustomEvent('gsmHeight', {
+        detail: { height }
+      })
+    );
+
+    this.dispatchEvent(
+      new CustomEvent('gsmheight', {
         detail: { height }
       })
     );
