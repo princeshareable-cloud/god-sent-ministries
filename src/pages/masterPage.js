@@ -1,10 +1,16 @@
 // API Reference: https://www.wix.com/velo/reference/api-overview/introduction
-// “Hello, World!” Example: https://learn-code.wix.com/en/article/hello-world
 
 $w.onReady(function () {
-    // Write your JavaScript here
+    // Auto-resize any custom element that reports its content height.
+    $w('CustomElement').forEach((el) => {
+        el.onMessage((event) => {
+            const data = (event && event.data) || {};
+            const rawHeight = Number(data.height);
+            if (data.type !== 'gsm-home-page-height' || !Number.isFinite(rawHeight)) {
+                return;
+            }
 
-    // To select an element by ID use: $w('#elementID')
-
-    // Click 'Preview' to run your code
+            el.height = Math.max(800, Math.ceil(rawHeight));
+        });
+    });
 });
