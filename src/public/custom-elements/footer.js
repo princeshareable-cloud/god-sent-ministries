@@ -1,77 +1,99 @@
-class FooterSection extends HTMLElement {
-  constructor() {
-    super();
-    this.attachShadow({ mode: 'open' });
+(function () {
+const FOOTER_TAG = 'footer-section';
+const FOOTER_FONT_LINK_ID = 'gsm-custom-element-fonts';
+const FOOTER_FONT_HREF = 'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:wght@300;400;500;600;700&display=swap';
+
+function ensureFonts() {
+  if (typeof document === 'undefined' || !document.head || document.getElementById(FOOTER_FONT_LINK_ID)) {
+    return;
   }
 
+  const link = document.createElement('link');
+  link.id = FOOTER_FONT_LINK_ID;
+  link.rel = 'stylesheet';
+  link.href = FOOTER_FONT_HREF;
+  document.head.appendChild(link);
+}
+
+function escapeHtml(value) {
+  return String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+class FooterSection extends HTMLElement {
   static get observedAttributes() {
     return ['brand-text', 'copy-text'];
   }
 
-  attributeChangedCallback(name, oldValue, newValue) {
-    if (oldValue !== newValue) this.render();
-  }
-
   connectedCallback() {
-    if (!this.hasAttribute('brand-text')) this.setAttribute('brand-text', 'God Sent Ministries');
-    if (!this.hasAttribute('copy-text')) this.setAttribute('copy-text', '\u00A9 2025 God Sent Ministries. All rights reserved. Crystal Lake, Illinois.');
     this.render();
   }
 
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (oldValue !== newValue && this.isConnected) {
+      this.render();
+    }
+  }
+
   render() {
-    const brand = this.getAttribute('brand-text');
-    const copy = this.getAttribute('copy-text');
+    ensureFonts();
+    this.style.display = 'block';
+    this.style.width = '100%';
+    this.style.height = '100%';
 
-    this.shadowRoot.innerHTML = '';
+    const brand = escapeHtml(this.getAttribute('brand-text') || 'God Sent Ministries');
+    const copy = this.getAttribute('copy-text') || '&#169; 2026 God Sent Ministries. All rights reserved. Crystal Lake, Illinois.';
 
-    const link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.href = 'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:wght@300;400;500;600;700&display=swap';
-    this.shadowRoot.appendChild(link);
+    this.innerHTML = `
+      <style>
+        :host {
+          display: block;
+          width: 100%;
+          height: 100%;
+          --gsm-serif: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+          --gsm-sans: 'DM Sans', Arial, sans-serif;
+        }
 
-    const style = document.createElement('style');
-    style.textContent = `
-      :host {
-        display: block;
-        width: 100%;
-        height: 100%;
-        --serif: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
-        --sans: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-      }
+        .gsm-footer,
+        .gsm-footer * {
+          box-sizing: border-box;
+        }
 
-      * { margin: 0; padding: 0; box-sizing: border-box; }
+        .gsm-footer {
+          width: 100%;
+          padding: 48px 24px;
+          background: #0f0d0b;
+          text-align: center;
+          font-family: var(--gsm-sans);
+        }
 
-      footer {
-        padding: 3rem 2rem;
-        background: #0f0d0b;
-        text-align: center;
-        font-family: var(--sans);
-        width: 100%;
-        min-height: 100%;
-      }
+        .gsm-footer-brand {
+          margin-bottom: 13px;
+          color: rgba(246, 241, 235, 0.4);
+          font-family: var(--gsm-serif);
+          font-size: 16px;
+        }
 
-      .footer-brand {
-        font-family: var(--serif);
-        font-size: 1rem;
-        color: rgba(246, 241, 235, 0.4);
-        margin-bottom: 0.8rem;
-      }
-
-      p {
-        font-size: 0.8rem;
-        color: rgba(246, 241, 235, 0.25);
-        letter-spacing: 0.05em;
-      }
+        .gsm-footer-copy {
+          margin: 0;
+          color: rgba(246, 241, 235, 0.25);
+          font-size: 13px;
+          letter-spacing: 0.05em;
+        }
+      </style>
+      <footer class="gsm-footer" id="footer">
+        <div class="gsm-footer-brand">${brand}</div>
+        <p class="gsm-footer-copy">${copy}</p>
+      </footer>
     `;
-    this.shadowRoot.appendChild(style);
-
-    const footer = document.createElement('footer');
-    footer.innerHTML = `
-      <div class="footer-brand">${brand}</div>
-      <p>${copy}</p>
-    `;
-    this.shadowRoot.appendChild(footer);
   }
 }
 
-customElements.define('footer-section', FooterSection);
+if (!customElements.get(FOOTER_TAG)) {
+  customElements.define(FOOTER_TAG, FooterSection);
+}
+})();

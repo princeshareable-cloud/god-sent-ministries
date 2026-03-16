@@ -448,6 +448,17 @@ class GsmHomePage extends HTMLElement {
       return;
     }
 
+    const offsetTop = this._getOffsetTopWithinPage(target);
+    this.dispatchEvent(
+      new CustomEvent('gsmNavigate', {
+        detail: {
+          target: href.slice(1),
+          offsetTop
+        }
+      })
+    );
+
+    // Fallback for non-Wix environments where the iframe itself can scroll.
     target.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
     const nav = this.querySelector('.gsm-nav');
@@ -478,6 +489,17 @@ class GsmHomePage extends HTMLElement {
     }
 
     return target;
+  }
+
+  _getOffsetTopWithinPage(target) {
+    const stack = this.querySelector('.gsm-page-stack');
+    if (!stack || !target || !target.getBoundingClientRect || !stack.getBoundingClientRect) {
+      return 0;
+    }
+
+    const stackRect = stack.getBoundingClientRect();
+    const targetRect = target.getBoundingClientRect();
+    return Math.max(0, Math.round(targetRect.top - stackRect.top));
   }
 
   _wireAutoHeight() {
